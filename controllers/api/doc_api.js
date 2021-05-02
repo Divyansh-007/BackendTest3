@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const Doctor = require('../../models/doctor');
 
 module.exports.register = async function(req,res){
@@ -38,5 +39,29 @@ module.exports.register = async function(req,res){
         return res.status(400).json({
             message: 'Error in registering !!'
         });
+    }
+}
+
+module.exports.login = async function(req,res){
+    try {
+        let doc = await Doctor.findOne({username: req.body.username});
+
+        if(!doc || doc.password != req.body.password){
+            return res.status(422).json({
+                message: 'Invalid Username / Password !!'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Sign In Successfully!!, here is your token',
+            data: {
+                token: jwt.sign(doc.toJSON(),'covid',{expiresIn: '100000'})
+            }
+        });
+    }catch(err){
+        console.log(err);
+       return res.status(500).json({
+           message: 'Internal Server Error'
+       });   
     }
 }
