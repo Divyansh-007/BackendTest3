@@ -8,10 +8,10 @@ const app = express();
 // connecting database
 const db = require('./config/mongoose');
 
-// // for authentication using passport.js
-// const passport = require('passport');
-// // jwt strategy
-// const passportJwt = require('./config/passport-jwt-strategy');
+// for authentication using passport.js
+const passport = require('passport');
+// jwt strategy
+const passportJwt = require('./config/passport-jwt-strategy');
 
 // // to use encoded input data
 // app.use(express.urlencoded());
