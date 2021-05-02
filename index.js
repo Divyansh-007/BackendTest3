@@ -5,8 +5,8 @@ const port = 8000;
 
 const app = express();
 
-// // connecting database
-// const db = require('./config/mongoose');
+// connecting database
+const db = require('./config/mongoose');
 
 // // for authentication using passport.js
 // const passport = require('passport');
@@ -19,6 +19,7 @@ const app = express();
 // // use (main) express router
 // app.use('/',require('./routes/index'));
 
+// checking the server
 app.listen(port,function(err){
     if(err){console.log(`Error in running the server: ${err}`);}
 
