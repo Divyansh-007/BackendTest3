@@ -13,11 +13,11 @@ const passport = require('passport');
 // jwt strategy
 const passportJwt = require('./config/passport-jwt-strategy');
 
-// // to use encoded input data
-// app.use(express.urlencoded());
+// to use encoded input data
+app.use(express.urlencoded());
 
-// // use (main) express router
-// app.use('/',require('./routes/index'));
+// use (main) express router
+app.use('/',require('./routes/index'));
 
 // checking the server
 app.listen(port,function(err){
