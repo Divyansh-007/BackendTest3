@@ -78,7 +78,7 @@ module.exports.createReport = async function(req,res){
             
             if(!patient){
                 return res.status(404).json({
-                    meesage: 'No Patient was found !!'
+                    message: 'No Patient was found !!'
                 });
             }else{
                 let report = await Report.create({
@@ -108,7 +108,6 @@ module.exports.createReport = async function(req,res){
             });  
         }
     }else{
-        console.log(err);
         return res.status(401).json({
             message: 'Unauthorized'
         });   
