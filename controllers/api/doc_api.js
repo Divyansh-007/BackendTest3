@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Doctor = require('../../models/doctor');
+const Patient = require('../../models/patient');
+const Report = require('../../models/report');
 
 module.exports.register = async function(req,res){
     if(req.body.password != req.body.confirm_password){
@@ -63,5 +65,51 @@ module.exports.login = async function(req,res){
        return res.status(500).json({
            message: 'Internal Server Error'
        });   
+    }
+}
+
+module.exports.createReport = async function(req,res){
+    let doc = await Doctor.find(req.doctor);
+
+    if(doc){
+        try {
+            console.log(doc);
+            let patient = await Patient.findById(req.params.id);
+            
+            if(!patient){
+                return res.status(404).json({
+                    meesage: 'No Patient was found !!'
+                });
+            }else{
+                let report = await Report.create({
+                    of: patient._id,
+                    createdBy: doc._id,
+                    date: req.body.date,
+                    status: req.body.status
+                });
+    
+                patient.reports.push(report);
+                patient.save();
+    
+                report = await report.populate('of','name').populate('createdBy','name').execPopulate();
+    
+                return res.status(200).json({
+                    message: 'Report Created Successfully !!',
+                    data: {
+                        report: report
+                    }
+                });
+            }
+        }catch(err){
+            console.log(err);
+            return res.status(400).json({
+                message: 'Error in creating report !!'
+            });  
+        }
+    }else{
+        console.log(err);
+        return res.status(401).json({
+            message: 'Unauthorized'
+        });   
     }
 }

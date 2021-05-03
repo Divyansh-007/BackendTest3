@@ -9,11 +9,11 @@ let opts = {
 }
 
 passport.use(new JWTStrategy(opts, function(jwtPayload,done){
-    Doctor.findById(jwtPayload._id,function(err,doc){
+    Doctor.findById(jwtPayload._id,function(err,doctor){
         if(err){console.log('error in finding the doctor',err); return;}
 
-        if(doc){
-            return done(null,doc);
+        if(doctor){
+            return done(null,doctor);
         }else{
             return done(null,false);
         }
