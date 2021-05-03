@@ -69,7 +69,7 @@ module.exports.login = async function(req,res){
 }
 
 module.exports.createReport = async function(req,res){
-    let doc = await Doctor.find(req.doctor);
+    let doc = await Doctor.findOne(req.doctor);
 
     if(doc){
         try {

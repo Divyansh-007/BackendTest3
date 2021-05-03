@@ -1,9 +1,9 @@
 const Patient = require('../../models/patient');
 
 module.exports.register = async function(req,res){
-    if(req.body.password != req.body.confirm_password){
+    if(req.body.phoneNumber != req.body.confirm_phoneNumber){
         return res.status(400).json({
-            message: 'Passwords do not match , Try Again !!'
+            message: 'Phone Numbers do not match , Try Again !!'
         });
     }
 
@@ -19,14 +19,14 @@ module.exports.register = async function(req,res){
             newPatient = await Patient.findOne({phoneNumber: req.body.phoneNumber});
 
             return res.status(200).json({
-                message: 'You are registered successfully !!',
+                message: 'New Patient is registered successfully !!',
                 data: {
                     patient: newPatient
                 }
             });
         }else{
             return res.status(200).json({
-                message: 'You are already registered , Please login to continue !!',
+                message: 'The Patient is already registered !!',
                 data: {
                     patient: patient
                 }
