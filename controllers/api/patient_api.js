@@ -14,6 +14,7 @@ module.exports.register = async function(req,res){
             let newPatient = await Patient.create({
                 name: req.body.name,
                 phoneNumber: req.body.phoneNumber,
+                status: req.body.status
             });
 
             newPatient = await Patient.findOne({phoneNumber: req.body.phoneNumber});

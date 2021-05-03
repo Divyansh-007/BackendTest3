@@ -8,7 +8,16 @@ module.exports.index = function(req,res){
 }
 
 module.exports.allReports = async function(req,res){
-    let reports = await Report.find({status: req.params.status}).populate('of','name').populate('createdBy','name');
+    let reports = await Patient.find({status: req.params.status})
+                        .select({'_id' : 0 , 'status': 0})
+                        .populate({
+                            path: 'reports',
+                            select: {'_id' : 0, 'of' : 0},
+                            populate: {
+                                path: 'createdBy',
+                                select: {'_id' : 0, 'username': 0, 'password': 0}
+                            }
+                        });
 
     return res.status(200).json({
         message: `Reports of all Patients with status ${req.params.status}`,

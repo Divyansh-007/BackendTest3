@@ -87,7 +87,8 @@ module.exports.createReport = async function(req,res){
                     date: req.body.date,
                     status: req.body.status
                 });
-    
+                
+                patient = await Patient.findByIdAndUpdate(req.params.id, {status: req.body.status});
                 patient.reports.push(report);
                 patient.save();
     
