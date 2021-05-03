@@ -7,4 +7,6 @@ router.use('/home',require('./home'));
 
 router.use('/doctor',require('./doctor'));
 
+router.use('/patients',require('./patient'));
+
 module.exports = router;
