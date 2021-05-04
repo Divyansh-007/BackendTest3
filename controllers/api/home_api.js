@@ -9,13 +9,13 @@ module.exports.index = function(req,res){
 
 module.exports.allReports = async function(req,res){
     let reports = await Patient.find({status: req.params.status})
-                        .select({'_id' : 0 , 'status': 0})
+                        .select({'_id' : 0 , 'status': 0, 'createdAt': 0 , 'updatedAt': 0, '__v' : 0})
                         .populate({
                             path: 'reports',
-                            select: {'_id' : 0, 'of' : 0},
+                            select: {'_id' : 0, 'of' : 0, 'createdAt': 0 , 'updatedAt': 0, '__v' : 0},
                             populate: {
                                 path: 'createdBy',
-                                select: {'_id' : 0, 'username': 0, 'password': 0}
+                                select: {'_id' : 0, 'username': 0, 'password': 0, 'createdAt': 0 , 'updatedAt': 0, '__v' : 0}
                             }
                         });
 
@@ -31,7 +31,8 @@ module.exports.patientAllReports = async function(req,res){
     try {
         let patient = await Patient.findById(req.params.id);
 
-        let reports = await Report.find({of: patient._id}).select({'_id': 0, 'of': 0}).populate('createdBy','name');
+        let reports = await Report.find({of: patient._id})
+                                    .select({'_id': 0, 'of': 0, 'createdAt': 0 , 'updatedAt': 0, '__v' : 0}).populate('createdBy','name');
 
         return res.status(200).json({
             message: `All Reports of Patient by Name: ${patient.name}`,

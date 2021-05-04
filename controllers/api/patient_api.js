@@ -8,7 +8,8 @@ module.exports.register = async function(req,res){
     }
 
     try {
-        let patient = await Patient.findOne({phoneNumber: req.body.phoneNumber});
+        let patient = await Patient.findOne({phoneNumber: req.body.phoneNumber})
+                                    .select({'createdAt' : 0, 'updatedAt' : 0, '__v': 0});
         
         if(!patient){
             let newPatient = await Patient.create({
@@ -17,7 +18,8 @@ module.exports.register = async function(req,res){
                 status: req.body.status
             });
 
-            newPatient = await Patient.findOne({phoneNumber: req.body.phoneNumber});
+            newPatient = await Patient.findOne({phoneNumber: req.body.phoneNumber})
+                                        .select({'createdAt' : 0, 'updatedAt' : 0, '__v' : 0});
 
             return res.status(200).json({
                 message: 'New Patient is registered successfully !!',

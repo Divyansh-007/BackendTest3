@@ -11,7 +11,8 @@ module.exports.register = async function(req,res){
     }
 
     try {
-        let doc = await Doctor.findOne({username: req.body.username}).select({'_id' : 0 ,'name': 1, 'username' : 1});
+        let doc = await Doctor.findOne({username: req.body.username})
+                                .select({'_id' : 0 ,'createdAt': 0, 'updatedAt' : 0, 'password' : 0, '__v' : 0});
         
         if(!doc){
             let newDoc = await Doctor.create({
@@ -20,7 +21,8 @@ module.exports.register = async function(req,res){
                 password: req.body.password
             });
 
-            newDoc = await Doctor.findOne({username: req.body.username}).select({'_id' : 0 ,'name': 1, 'username' : 1});
+            newDoc = await Doctor.findOne({username: req.body.username})
+                                    .select({'_id' : 0 ,'createdAt': 0, 'updatedAt' : 0, 'password' : 0, '__v' : 0});
 
             return res.status(200).json({
                 message: 'You are registered successfully !!',
@@ -48,16 +50,24 @@ module.exports.login = async function(req,res){
     try {
         let doc = await Doctor.findOne({username: req.body.username});
 
-        if(!doc || doc.password != req.body.password){
+        if(!doc){
             return res.status(422).json({
-                message: 'Invalid Username / Password !!'
+                message: 'No account with that username exists !!'
             });
         }
 
-        return res.status(200).json({
-            message: 'Sign In Successfully!!, here is your token',
-            data: {
-                token: jwt.sign(doc.toJSON(),'covid',{expiresIn: '100000'})
+        doc.comparePassword(req.body.password,function(err,isMatch){
+            if(!isMatch){
+                return res.status(422).json({
+                    message: 'Invalid Username / Password !!'
+                });
+            }else{
+                return res.status(200).json({
+                    message: 'Sign In Successfully!!, here is your token',
+                    data: {
+                        token: jwt.sign(doc.toJSON(),'covid',{expiresIn: '100000'})
+                    }
+                });
             }
         });
     }catch(err){
@@ -69,47 +79,38 @@ module.exports.login = async function(req,res){
 }
 
 module.exports.createReport = async function(req,res){
-    let doc = await Doctor.findOne(req.doctor);
-
-    if(doc){
-        try {
-            console.log(doc);
-            let patient = await Patient.findById(req.params.id);
+    try {
+        let patient = await Patient.findById(req.params.id);
             
-            if(!patient){
-                return res.status(404).json({
-                    message: 'No Patient was found !!'
-                });
-            }else{
-                let report = await Report.create({
-                    of: patient._id,
-                    createdBy: doc._id,
-                    date: req.body.date,
-                    status: req.body.status
-                });
+        if(!patient){
+            return res.status(404).json({
+                message: 'No Patient was found !!'
+            });
+        }else{
+            let report = await Report.create({
+                of: patient._id,
+                createdBy: req.user._id,
+                date: req.body.date,
+                status: req.body.status
+            });
                 
-                patient = await Patient.findByIdAndUpdate(req.params.id, {status: req.body.status});
-                patient.reports.push(report);
-                patient.save();
+            patient = await Patient.findByIdAndUpdate(req.params.id, {status: req.body.status});
+            patient.reports.push(report);
+            patient.save();
     
-                report = await report.populate('of','name').populate('createdBy','name').execPopulate();
+            report = await report.populate('of','name').populate('createdBy','name').execPopulate();
     
-                return res.status(200).json({
-                    message: 'Report Created Successfully !!',
-                    data: {
-                        report: report
-                    }
-                });
-            }
-        }catch(err){
-            console.log(err);
-            return res.status(400).json({
-                message: 'Error in creating report !!'
-            });  
+            return res.status(200).json({
+                message: 'Report Created Successfully !!',
+                data: {
+                    report: report
+                }
+            });
         }
-    }else{
-        return res.status(401).json({
-            message: 'Unauthorized'
-        });   
+    }catch(err){
+        console.log(err);
+        return res.status(400).json({
+            message: 'Error in creating report !!'
+        });
     }
 }
