@@ -1,11 +1,13 @@
-// required libraries
+// using express js framework
 const express = require('express');
 
+// port for running
 const port = 8000;
 
+// app intialization
 const app = express();
 
-// connecting database
+// for database
 const db = require('./config/mongoose');
 
 // for authentication using passport.js

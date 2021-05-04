@@ -18,6 +18,7 @@ const docSchema = mongoose.Schema({
     timestamps: true
 });
 
+// before saving the doctor checking if the password has changed and is needed to be encrypted again to be saved
 docSchema.pre('save',function(next){
     let doc = this;
     let salt_factor = 10;
@@ -38,6 +39,7 @@ docSchema.pre('save',function(next){
     });
 });
 
+// comparing entered and encrypted passwords for a doctor  
 docSchema.methods.comparePassword = function(password,cb){
     bcrypt.compare(password, this.password, function(err,isMatch){
         if(err){return cb(err);}

@@ -1,8 +1,10 @@
+// required libraries and models
 const jwt = require('jsonwebtoken');
 const Doctor = require('../../models/doctor');
 const Patient = require('../../models/patient');
 const Report = require('../../models/report');
 
+// registering a new doctor
 module.exports.register = async function(req,res){
     if(req.body.password != req.body.confirm_password){
         return res.status(400).json({
@@ -46,6 +48,7 @@ module.exports.register = async function(req,res){
     }
 }
 
+// logging in a doctor
 module.exports.login = async function(req,res){
     try {
         let doc = await Doctor.findOne({username: req.body.username});
@@ -78,6 +81,7 @@ module.exports.login = async function(req,res){
     }
 }
 
+// creating report of a patient
 module.exports.createReport = async function(req,res){
     try {
         let patient = await Patient.findById(req.params.id);

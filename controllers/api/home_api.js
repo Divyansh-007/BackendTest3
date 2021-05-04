@@ -1,12 +1,15 @@
+// required models
 const Patient = require('../../models/patient');
 const Report = require('../../models/report');
 
+// starting api
 module.exports.index = function(req,res){
     return res.status(200).json({
         message: 'Welcome to Hospital API'
     });
 }
 
+// all reports of all patients with a specific status filtered
 module.exports.allReports = async function(req,res){
     let reports = await Patient.find({status: req.params.status})
                         .select({'_id' : 0 , 'status': 0, 'createdAt': 0 , 'updatedAt': 0, '__v' : 0})
@@ -27,6 +30,7 @@ module.exports.allReports = async function(req,res){
     });
 }
 
+// all reports of a patient
 module.exports.patientAllReports = async function(req,res){
     try {
         let patient = await Patient.findById(req.params.id);

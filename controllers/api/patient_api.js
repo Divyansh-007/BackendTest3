@@ -1,5 +1,7 @@
+// required model
 const Patient = require('../../models/patient');
 
+// registering a new patient
 module.exports.register = async function(req,res){
     if(req.body.phoneNumber != req.body.confirm_phoneNumber){
         return res.status(400).json({
