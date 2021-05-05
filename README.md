@@ -115,30 +115,30 @@ If everything is created as it is, then we are done with creating the project an
 
 ## Testing and Working (I have used Postman !!)
 Step - 1 We will start the api and check if it is working by calling
-- http://localhost:8000/api/v1/home/
+- https://covid-track-api.herokuapp.com/api/v1/home/
 
 Step - 2 Now we will register two doctors using
-- http://localhost:8000/api/v1/doctor/register
+- https://covid-track-api.herokuapp.com/api/v1/doctor/register
   - You have to enter **name** , **username** , **password** and **confirm_password** fields.
     - whether registering a new doctor or an existing one you will receive the response accordingly.
 
 Step - 3 As we have registered doctors it's time to register patients as following
-- http://localhost:8000/api/v1/patient/register
+- https://covid-track-api.herokuapp.com/api/v1/patient/register
   - You have to enter **name** , **phoneNumber** , **confirm_phoneNumber** and **status** (intial status) fields.
     - whether registering a new patient or an existing one you will receive the response accordingly.
 
 Step - 4 As soon as we are done with registering patients, we can now start creating reports for concerned patient.  
 Here will be authorizing a logged in doctor only for creating report.
 - Firstly we will login the specific doctor and generate the token for authorization as
-  - http://localhost:8000/api/v1/doctor/login
+  - https://covid-track-api.herokuapp.com/api/v1/doctor/login
 - Then we will create a report for a patient using his/her id by
-  - http://localhost:8000/api/v1/doctor/patients/:id/create_report
+  - https://covid-track-api.herokuapp.com/api/v1/doctor/patients/:id/create_report
     - You have to enter **status** and **date** fields.
 
 Step - 5 If we have created report for a patient, we can look all his/her reports using
-- http://localhost:8000/api/v1/home/patients/:id/all_reports
+- https://covid-track-api.herokuapp.com/api/v1/home/patients/:id/all_reports
   - you will get the desired response with all the reports of the user with the provided id when and who created with what status. 
 
 Step - 6 At any moment if we need to get all reports of all patients with a specific status filtered we can also do so using
-- http://localhost:8000/api/v1/home/reports/:status
+- https://covid-track-api.herokuapp.com/api/v1/home/reports/:status
   - you will get all reports of all patients which the specified status at present with the hospital.
