@@ -18,6 +18,12 @@ const passportJwt = require('./config/passport-jwt-strategy');
 // to use encoded input data
 app.use(express.urlencoded());
 
+// for using static assets files
+app.use(express.static('./assets'));
+
+// using ejs as view engine
+app.set('view engine','ejs');
+
 // use (main) express router
 app.use('/',require('./routes/index'));
 
