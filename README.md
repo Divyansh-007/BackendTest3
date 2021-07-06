@@ -123,7 +123,7 @@ Step - 2 Now we will register two doctors using
     - whether registering a new doctor or an existing one you will receive the response accordingly.
 
 Step - 3 As we have registered doctors it's time to register patients as following
-- http://localhost:8000/api/v1/patient/register
+- http://localhost:8000/api/v1/patients/register
   - You have to enter **name** , **phoneNumber** , **confirm_phoneNumber** and **status** (intial status) fields.
     - whether registering a new patient or an existing one you will receive the response accordingly.
 
