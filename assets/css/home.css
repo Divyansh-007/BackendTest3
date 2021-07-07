@@ -13,3 +13,15 @@ body{
     margin: 2%;
     font-style: oblique;
 }
+
+#main_list li{
+    font-size: 1.25rem;
+}
+
+.inner_list{
+    list-style: none;
+}
+
+.link{
+    color: brown;
+}
