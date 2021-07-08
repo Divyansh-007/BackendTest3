@@ -1,5 +1,5 @@
 # Hospital API
-<b>Link: </b> https://covid-track-api.herokuapp.com/
+<b>Link: </b> https://covid-track-api.herokuapp.com/  
 A hospital api that can be used to keep track of covid patients.
 
 ## Tools/Technologies
