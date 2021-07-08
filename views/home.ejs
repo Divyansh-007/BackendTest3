@@ -22,7 +22,7 @@
                     <li class="link"><b>https://covid-track-api.herokuapp.com/api/v1/home</b></li>
                     <li>
                         <ul class="inner_list">
-                            <li>You will recieve a <i><b>Welcome</b></i> message as response</li>
+                            <li>You will recieve a <i><b>Welcome</b></i> message as response.</li>
                         </ul>
                     </li>
                 </ul>
@@ -49,6 +49,56 @@
                         <ul class="inner_list">
                             <li>You have to enter <b>name</b> , <b>phoneNumber</b> , <b>confirm_phoneNumber</b> and <b>status <i>(initial status)</i></b> fields.</li>
                             <li>PS: whether registering a new patient or an existing one you will receive the response accordingly.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                As soon as you are done with registering patients, you can now start creating reports for concerned patient.
+                <br>
+                Here you will be authorizing a logged in doctor only for creating report.
+                <ul class="inner_list">
+                   <li>
+                       <ul>
+                           <li>Firstly you will login the specific doctor and generate the token for authorization as
+                           <br>
+                           <span class="link"><b>https://covid-track-api.herokuapp.com/api/v1/doctor/login</b></span></li>
+                       </ul>
+                   </li>
+                   
+                   <li>
+                    <ul>
+                        <li>Then you will create a report for a patient using his/her id by
+                        <br>
+                        <span class="link"><b>https://covid-track-api.herokuapp.com/api/v1/doctor/patients/:id/create_report</b></span>
+                        <br>
+                        You have to enter <b>status</b> and <b>date</b> fields along with <b>token</b> in header for authentication generated in last step.
+                    </li>
+                    </ul>
+                </li>
+                </ul>
+            </li>
+
+            <li>
+                If you have created report for a patient, you can look all his/her reports using
+                <ul class="inner_list">
+                    <li class="link"><b>https://covid-track-api.herokuapp.com/api/v1/patients/:id/all_reports</b></li>
+                    <li>
+                        <ul class="inner_list">
+                            <li>You will get the desired response with all the reports of the user with the provided id when and who created with what status.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                At any moment if we need to get all reports of all patients with a specific status filtered we can also do so using
+                <ul class="inner_list">
+                    <li class="link"><b>https://covid-track-api.herokuapp.com/api/v1/home/reports/:status</b></li>
+                    <li>
+                        <ul class="inner_list">
+                            <li>You will get all reports of all patients which the specified status at present with the hospital.</li>
                         </ul>
                     </li>
                 </ul>
