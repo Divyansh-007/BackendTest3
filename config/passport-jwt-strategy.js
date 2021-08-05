@@ -7,7 +7,7 @@ const Doctor = require('../models/doctor');
 // options to be used
 let opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'covid'
+    secretOrKey: "JWT Secret"
 }
 
 // new strategy initialization
